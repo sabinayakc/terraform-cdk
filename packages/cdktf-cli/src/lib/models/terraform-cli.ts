@@ -9,6 +9,7 @@ import {
 } from "./terraform";
 import { SynthesizedStack } from "../synth-stack";
 import { terraformBinaryName } from "../terraform";
+import { TerraformJson } from "../terraform-json";
 
 export class TerraformCliPlan
   extends AbstractTerraformPlan
@@ -18,7 +19,7 @@ export class TerraformCliPlan
     public readonly planFile: string,
     public readonly plan: { [key: string]: any }
   ) {
-    super(planFile, plan.resource_changes, plan.output_changes);
+    super(planFile, plan?.resource_changes, plan?.output_changes);
   }
 }
 
@@ -50,6 +51,26 @@ export class TerraformCli implements Terraform {
       args.push("-upgrade");
     }
 
+    if (this.isTFCPlan) {
+      await exec(
+        terraformBinaryName,
+        [
+          "providers",
+          "lock",
+          "-platform=windows_amd64",
+          "-platform=darwin_amd64",
+          "-platform=linux_amd64",
+        ],
+        {
+          cwd: this.workdir,
+          env: process.env,
+          signal: this.abortSignal,
+        },
+        this.onStdout("init"),
+        this.onStderr("init")
+      );
+    }
+
     await exec(
       terraformBinaryName,
       args,
@@ -63,13 +84,26 @@ export class TerraformCli implements Terraform {
     );
   }
 
+  private get isTFCPlan(): boolean {
+    const content = JSON.parse(this.stack.content) as TerraformJson;
+    if (content.terraform?.backend?.remote) {
+      return true;
+    }
+
+    return false;
+  }
+
   public async plan(
     destroy = false,
     refreshOnly = false,
     parallelism = -1
   ): Promise<TerraformPlan> {
     const planFile = "plan";
-    const options = ["plan", "-input=false", "-out", planFile];
+    const options = ["plan", "-input=false"];
+
+    if (!this.isTFCPlan) {
+      options.push("-out", planFile);
+    }
     if (destroy) {
       options.push("-destroy");
     }
@@ -104,7 +138,7 @@ export class TerraformCli implements Terraform {
   }
 
   public async deploy(
-    planFile: string,
+    planFile?: string,
     refreshOnly = false,
     parallelism = -1,
     extraOptions: string[] = []
@@ -121,7 +155,7 @@ export class TerraformCli implements Terraform {
         ...(refreshOnly ? ["-refresh-only"] : []),
         ...(parallelism > -1 ? [`-parallelism=${parallelism}`] : []),
         // only appends planFile if not empty
-        // this allows deploying without a plan (as used in watch)
+        // this allows deploying without a plan (as used in watch and for TFC)
         ...(planFile ? [planFile] : []),
       ],
       { cwd: this.workdir, env: process.env, signal: this.abortSignal },
