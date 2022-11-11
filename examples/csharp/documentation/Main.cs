@@ -21,6 +21,8 @@ namespace MyCompany.MyApp
             App app = new App();
             new Examples.MyAssetStack(app, "assets");
             new Examples.MyConstructsStack(app, "constructs");
+            new Examples.DataSourceStack(app, "data-sources");
+            new Examples.RemoteStateDataSourceStack(app, "remote-state-data-sources");
             app.Synth();
             Console.WriteLine("App synth complete");
         }
