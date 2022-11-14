@@ -20,15 +20,19 @@ This page shows how you can interoperate HCL and CDK for Terraform configuration
 
 The following TypeScript example is a CDKTF application that uses the `hashicorp/random` provider to generate a random name.
 
-```typescript
+<!-- #NEXT_CODE_BLOCK_SOURCE:csharp examples/csharp/documentation#hcl-interop -->
+
+<CodeTabs>
+  
+```ts
 import { Construct } from "constructs";
 import { App, TerraformOutput, TerraformStack, TerraformVariable } from "cdktf";
 import { Pet } from "./.gen/providers/random/pet";
 import { RandomProvider } from "./.gen/providers/random/provider";
 
 class MyStack extends TerraformStack {
-  constructor(scope: Construct, name: string) {
-    super(scope, name);
+constructor(scope: Construct, name: string) {
+super(scope, name);
 
     new RandomProvider(this, "default", {});
     const petNameLength = new TerraformVariable(this, "petNameLength", {
@@ -44,13 +48,54 @@ class MyStack extends TerraformStack {
     new TerraformOutput(this, "name", {
       value: myPet.id,
     });
-  }
+
+}
 }
 
 const app = new App();
 new MyStack(app, "random-pet-module");
 app.synth();
-```
+
+````
+
+
+```csharp
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using Constructs;
+using HashiCorp.Cdktf;
+using random.Provider;
+using random.Pet;
+
+namespace Examples
+{
+    class HclInteropStack : TerraformStack
+    {
+        public HclInteropStack(Construct scope, string name) : base(scope, name)
+        {
+            new RandomProvider(this, "default", new RandomProviderConfig {});
+
+            var petNameLength = new TerraformVariable(this, "petNameLength", new TerraformVariableConfig {
+                Type = "number",
+                Default = 2,
+                Description = "Pet name length"
+            });
+
+            var myPet = new Pet(this, "example", new PetConfig {
+                Length = petNameLength.NumberValue
+            });
+
+            new TerraformOutput(this, "name", new TerraformOutputConfig {
+                Value = myPet.Id
+            });
+        }
+    }
+}
+````
+
+</CodeTabs>
 
 To use this as a Terraform module, run `cdktf synth` and copy the resulting `cdktf.out/stacks/random-pet-module/cdktf.json` file out to the module directory in your HCL project.
 

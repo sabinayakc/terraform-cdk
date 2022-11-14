@@ -21,6 +21,7 @@ namespace MyCompany.MyApp
             App app = new App();
             new Examples.MyAssetStack(app, "assets");
             new Examples.MyConstructsStack(app, "constructs");
+            new Examples.HclInteropStack(app, "hcl-interop");
             app.Synth();
             Console.WriteLine("App synth complete");
         }
