@@ -469,7 +469,7 @@ export class DependencyManager {
 
       localProvidersInfo.push({
         providerName: constraint.simplifiedName,
-        providerConstraint: constraintValue,
+        providerConstraint: constraintValue || constraint.version,
         providerVersion: version,
       });
     }
