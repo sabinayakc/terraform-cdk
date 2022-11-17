@@ -22454,6 +22454,8 @@ The list of aspects which were directly applied on this scope.
 
 ### AssertionReturn <a name="AssertionReturn" id="cdktf.testingMatchers.AssertionReturn"></a>
 
+Class representing the contents of a return by an assertion.
+
 #### Initializers <a name="Initializers" id="cdktf.testingMatchers.AssertionReturn.Initializer"></a>
 
 ```csharp
@@ -22462,10 +22464,10 @@ using HashiCorp.Cdktf;
 new AssertionReturn(string Message, bool Pass);
 ```
 
-| **Name**                                                                                                | **Type**            | **Description**   |
-| ------------------------------------------------------------------------------------------------------- | ------------------- | ----------------- |
-| <code><a href="#cdktf.testingMatchers.AssertionReturn.Initializer.parameter.message">Message</a></code> | <code>string</code> | _No description._ |
-| <code><a href="#cdktf.testingMatchers.AssertionReturn.Initializer.parameter.pass">Pass</a></code>       | <code>bool</code>   | _No description._ |
+| **Name**                                                                                                | **Type**            | **Description**                                                            |
+| ------------------------------------------------------------------------------------------------------- | ------------------- | -------------------------------------------------------------------------- |
+| <code><a href="#cdktf.testingMatchers.AssertionReturn.Initializer.parameter.message">Message</a></code> | <code>string</code> | - String message containing information about the result of the assertion. |
+| <code><a href="#cdktf.testingMatchers.AssertionReturn.Initializer.parameter.pass">Pass</a></code>       | <code>bool</code>   | - Boolean pass denoting the success of the assertion.                      |
 
 ---
 
@@ -22473,20 +22475,24 @@ new AssertionReturn(string Message, bool Pass);
 
 - _Type:_ string
 
+String message containing information about the result of the assertion.
+
 ---
 
 ##### `Pass`<sup>Required</sup> <a name="Pass" id="cdktf.testingMatchers.AssertionReturn.Initializer.parameter.pass"></a>
 
 - _Type:_ bool
 
+Boolean pass denoting the success of the assertion.
+
 ---
 
 #### Properties <a name="Properties" id="Properties"></a>
 
-| **Name**                                                                                   | **Type**            | **Description**   |
-| ------------------------------------------------------------------------------------------ | ------------------- | ----------------- |
-| <code><a href="#cdktf.testingMatchers.AssertionReturn.property.message">Message</a></code> | <code>string</code> | _No description._ |
-| <code><a href="#cdktf.testingMatchers.AssertionReturn.property.pass">Pass</a></code>       | <code>bool</code>   | _No description._ |
+| **Name**                                                                                   | **Type**            | **Description**                                                            |
+| ------------------------------------------------------------------------------------------ | ------------------- | -------------------------------------------------------------------------- |
+| <code><a href="#cdktf.testingMatchers.AssertionReturn.property.message">Message</a></code> | <code>string</code> | - String message containing information about the result of the assertion. |
+| <code><a href="#cdktf.testingMatchers.AssertionReturn.property.pass">Pass</a></code>       | <code>bool</code>   | - Boolean pass denoting the success of the assertion.                      |
 
 ---
 
@@ -22498,6 +22504,8 @@ public string Message { get; }
 
 - _Type:_ string
 
+String message containing information about the result of the assertion.
+
 ---
 
 ##### `Pass`<sup>Required</sup> <a name="Pass" id="cdktf.testingMatchers.AssertionReturn.property.pass"></a>
@@ -22507,6 +22515,8 @@ public bool Pass { get; }
 ```
 
 - _Type:_ bool
+
+Boolean pass denoting the success of the assertion.
 
 ---
 
@@ -28260,6 +28270,8 @@ new Testing();
 | <code><a href="#cdktf.Testing.toBeValidTerraform">ToBeValidTerraform</a></code>                         | _No description._                                                                           |
 | <code><a href="#cdktf.Testing.toHaveDataSource">ToHaveDataSource</a></code>                             | _No description._                                                                           |
 | <code><a href="#cdktf.Testing.toHaveDataSourceWithProperties">ToHaveDataSourceWithProperties</a></code> | _No description._                                                                           |
+| <code><a href="#cdktf.Testing.toHaveProvider">ToHaveProvider</a></code>                                 | _No description._                                                                           |
+| <code><a href="#cdktf.Testing.toHaveProviderWithProperties">ToHaveProviderWithProperties</a></code>     | _No description._                                                                           |
 | <code><a href="#cdktf.Testing.toHaveResource">ToHaveResource</a></code>                                 | _No description._                                                                           |
 | <code><a href="#cdktf.Testing.toHaveResourceWithProperties">ToHaveResourceWithProperties</a></code>     | _No description._                                                                           |
 
@@ -28450,6 +28462,52 @@ Testing.ToHaveDataSourceWithProperties(string Received, string ResourceType, Sys
 ---
 
 ###### `Properties`<sup>Optional</sup> <a name="Properties" id="cdktf.Testing.toHaveDataSourceWithProperties.parameter.properties"></a>
+
+- _Type:_ System.Collections.Generic.IDictionary< string, object >
+
+---
+
+##### `ToHaveProvider` <a name="ToHaveProvider" id="cdktf.Testing.toHaveProvider"></a>
+
+```csharp
+using HashiCorp.Cdktf;
+
+Testing.ToHaveProvider(string Received, string ResourceType);
+```
+
+###### `Received`<sup>Required</sup> <a name="Received" id="cdktf.Testing.toHaveProvider.parameter.received"></a>
+
+- _Type:_ string
+
+---
+
+###### `ResourceType`<sup>Required</sup> <a name="ResourceType" id="cdktf.Testing.toHaveProvider.parameter.resourceType"></a>
+
+- _Type:_ string
+
+---
+
+##### `ToHaveProviderWithProperties` <a name="ToHaveProviderWithProperties" id="cdktf.Testing.toHaveProviderWithProperties"></a>
+
+```csharp
+using HashiCorp.Cdktf;
+
+Testing.ToHaveProviderWithProperties(string Received, string ResourceType, System.Collections.Generic.IDictionary< string, object > Properties = null);
+```
+
+###### `Received`<sup>Required</sup> <a name="Received" id="cdktf.Testing.toHaveProviderWithProperties.parameter.received"></a>
+
+- _Type:_ string
+
+---
+
+###### `ResourceType`<sup>Required</sup> <a name="ResourceType" id="cdktf.Testing.toHaveProviderWithProperties.parameter.resourceType"></a>
+
+- _Type:_ string
+
+---
+
+###### `Properties`<sup>Optional</sup> <a name="Properties" id="cdktf.Testing.toHaveProviderWithProperties.parameter.properties"></a>
 
 - _Type:_ System.Collections.Generic.IDictionary< string, object >
 
@@ -29897,6 +29955,7 @@ Resolve an inner object.
 | ------------------------------------------------------------------------------------------ | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <code><a href="#cdktf.IResolveContext.property.preparing">Preparing</a></code>             | <code>bool</code>                  | True when we are still preparing, false if we're rendering the final output.                                                                                                                                                       |
 | <code><a href="#cdktf.IResolveContext.property.scope">Scope</a></code>                     | <code>Constructs.IConstruct</code> | The scope from which resolution has been initiated.                                                                                                                                                                                |
+| <code><a href="#cdktf.IResolveContext.property.ignoreEscapes">IgnoreEscapes</a></code>     | <code>bool</code>                  | True when ${} should not be parsed, and treated as literals.                                                                                                                                                                       |
 | <code><a href="#cdktf.IResolveContext.property.iteratorContext">IteratorContext</a></code> | <code>string</code>                | TerraformIterators can be passed for block attributes and normal list attributes both require different handling when the iterable variable is accessed e.g. a dynamic block needs each.key while a for expression just needs key. |
 | <code><a href="#cdktf.IResolveContext.property.suppressBraces">SuppressBraces</a></code>   | <code>bool</code>                  | True when ${} should be ommitted (because already inside them), false otherwise.                                                                                                                                                   |
 
@@ -29923,6 +29982,18 @@ public IConstruct Scope { get; }
 - _Type:_ Constructs.IConstruct
 
 The scope from which resolution has been initiated.
+
+---
+
+##### `IgnoreEscapes`<sup>Optional</sup> <a name="IgnoreEscapes" id="cdktf.IResolveContext.property.ignoreEscapes"></a>
+
+```csharp
+public bool IgnoreEscapes { get; set; }
+```
+
+- _Type:_ bool
+
+True when ${} should not be parsed, and treated as literals.
 
 ---
 
